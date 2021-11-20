@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+    Author: Anthony Trejo
+    Project: MatchmakerWeb 
+    
+    All Rights Rserved.
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Matchmaker Web</title>
+</head>
+
+<body>
+    <h1>Matchmaker</h1>
+    <p>Welcome to Matchmaker. Here you will test your knowledge to see how related we are. 
+        To begin, you will read each question and choose from the drop down. 
+        The options will be strongly agree, agree, neutral, disagree, or strongly disagree.
+        After answering all the questions, click on the "Calculate Compatibility" button.
+        Don't let me down, our friendship is relying on you.
+    </p>
+
+    <label>Spring is better than fall.</label><br />
+    <select id="q1">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+
+    <br /><br />
+
+    <label>Boneless over traditional wings.</label><br />
+    <select id="q2">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+
+    <br /><br />
+
+    <label>Money buys happiness.</label><br />
+    <select id="q3">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+
+    <br /><br />
+
+    <label>Cereal goes before the milk.</label><br />
+    <select id="q4">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+
+    <br /><br />
+
+    <label>Egg came before the chicken.</label><br />
+    <select id="q5">
+        <option value="5">Strongly Agree</option>
+        <option value="4">Agree</option>
+        <option value="3">Neutral</option>
+        <option value="2">Disagree</option>
+        <option value="1">Strongly Disagree</option>
+    </select>
+
+
+    <br /><br /><br />
+    <button onclick="calculateCompatibility()">Calculate Compatibility</button>
+    <p id="compatibility"></p>
+
+<script>
+console.log("Starting Matchmaker Web...");
+
+function calculateCompatibility() {
+    console.log("calculateCompatibility()");
+
+    const DESIRED_RESPONSE = [
+        2, /* disagree*/
+        4, /* agree */
+        3, /* neutral */ 
+        5, /* Strongly Agree */
+        3, /* neutral */ 
+    ]
+
+    const ANSWER_WEIGHT = [
+        2, // Depends
+        2, // Boneless are better
+        1, // Not important
+        1, // Not important
+        1, // Not important
+    ]
+
+    const MAX_SCORE = 35
+
+    // Get the current values of the dropdown controls.
+    let question1Response = document.getElementById('q1').selectedOptions[0].value; 
+    let question2Response = document.getElementById('q2').selectedOptions[0].value;
+    let question3Response = document.getElementById('q3').selectedOptions[0].value;
+    let question4Response = document.getElementById('q4').selectedOptions[0].value;
+    let question5Response = document.getElementById('q5').selectedOptions[0].value;
+
+    // OPTIONAL: Log the values associated with questions 1 through 5 to the console.
+    console.log("Question 1 Answers:");
+    console.log(document.getElementById('q1').selectedOptions[0].text);
+    console.log(document.getElementById('q1').selectedOptions[0].value);
+    console.log(question1Response);
+
+    console.log("Question 2 Answers:");
+    console.log(document.getElementById('q2').selectedOptions[0].text);
+    console.log(document.getElementById('q2').selectedOptions[0].value);
+    console.log(question2Response);
+
+    // Calculate compatibiity scores.
+    let question1Compatibility = 5 - Math.abs(question1Response - DESIRED_RESPONSE[0]);
+    question1Compatibility = question1Compatibility * ANSWER_WEIGHT[0];
+    let question2Compatibility = 5 - Math.abs(question2Response - DESIRED_RESPONSE[1]);
+    question2Compatibility = question2Compatibility * ANSWER_WEIGHT[1];
+    let question3Compatibility = 5 - Math.abs(question3Response - DESIRED_RESPONSE[2]);
+    question3Compatibility = question3Compatibility * ANSWER_WEIGHT[2];
+    let question4Compatibility = 5 - Math.abs(question4Response - DESIRED_RESPONSE[3]);
+    question4Compatibility = question4Compatibility * ANSWER_WEIGHT[3];
+    let question5Compatibility = 5 - Math.abs(question5Response - DESIRED_RESPONSE[4]);
+    question5Compatibility = question5Compatibility * ANSWER_WEIGHT[4];
+
+
+
+    console.log("c1="+question1Compatibility);
+    console.log("c2="+question2Compatibility);
+    console.log("c3="+question3Compatibility);
+    console.log("c4="+question3Compatibility);
+    console.log("c5="+question3Compatibility);
+
+    // Calculate total compatibility.
+    let totalCompatibility = question1Compatibility + question2Compatibility + question3Compatibility + question4Compatibility + question5Compatibility;
+    totalCompatibility *= 100 / MAX_SCORE;
+    totalCompatibility = Math.round(totalCompatibility);
+    console.log("totalCompatibility="+ totalCompatibility);
+
+
+    document.getElementById("compatibility").innerHTML = "Your compatibility is: " + totalCompatibility;
+}
+
+</script>
+
+</body>
+</html>
